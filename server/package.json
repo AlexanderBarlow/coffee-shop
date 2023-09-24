@@ -1,0 +1,32 @@
+{
+    "name": "rental-site",
+    "version": "1.0.0",
+    "engines": {
+        "node": "16.19.0",
+        "npm": "8.19.3"
+    },
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "watch": "nodemon server.js",
+        "seed": "node seeders/seeds.js",
+        "build": "tsc -p tsconfig.json"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "apollo-server-express": "^3.6.2",
+        "bcrypt": "^4.0.1",
+        "dotenv": "^16.0.3",
+        "express": "^4.17.1",
+        "graphql": "^16.6.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.9.10",
+        "typescript": "^4.9.5"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.3"
+    }
+}
