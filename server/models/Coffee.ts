@@ -1,13 +1,14 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, } from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose';
 
-interface ICoffee extends Document {
+export interface ICoffee extends Document {
   name: string;
   description: string;
   price: number;
   category: string;
 }
 
-const coffeeSchema = new Schema<ICoffee>({
+const coffeeSchema = new mongoose.Schema<ICoffee>({
   name: {
     type: String,
     required: true,
@@ -28,6 +29,9 @@ const coffeeSchema = new Schema<ICoffee>({
   },
 });
 
-const Coffee = model<ICoffee>('Coffee', coffeeSchema);
+interface CoffeeModel extends Model<ICoffee> {}
+
+// Create and export the Coffee model based on the schema
+const Coffee = mongoose.model<ICoffee, CoffeeModel>('Coffee', coffeeSchema);
 
 export default Coffee;

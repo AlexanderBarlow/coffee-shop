@@ -1,13 +1,13 @@
-import express, { Express, Request, Response } from "express";
-import { ApolloServer } from "apollo-server-express";
-import path from "path";
-import { authMiddleware } from "./utils/auth";
+const express = require("express");
+const { ApolloServer } = require("apollo-server-express");
+const path = require("path");
+const { authMiddleware } = require("./utils/auth");
 
-import { typeDefs, resolvers } from "./schemas";
-import connectDb from "./config/connection";
+const { typeDefs, resolvers } = require("./schemas");
+const connectDb = require("./config/connection");
 
 const PORT = process.env.PORT || 3001;
-const app: Express = express();
+const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -23,11 +23,11 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-app.get("*", function (req: Request, res: Response) {
+app.get("*", function (req, res) {
   res.sendFile(
     path.join(__dirname, "../client/build/index.html"),
     function (err) {

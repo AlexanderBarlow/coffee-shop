@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import jwt from 'jsonwebtoken';
+import { IUser } from '../models/User';
 
 const secret = 'mysecretssshhhhhhh';
 const expiration = '2h';
@@ -14,7 +15,7 @@ interface AuthenticatedRequest extends Request {
   user?: UserData;
 }
 
-export const authMiddleware = (req: AuthenticatedRequest): AuthenticatedRequest => {
+export const authMiddleware = function (req: AuthenticatedRequest): AuthenticatedRequest {
   let token = req.body.token || req.query.token || req.headers.authorization;
 
   if (req.headers.authorization) {
@@ -37,7 +38,7 @@ export const authMiddleware = (req: AuthenticatedRequest): AuthenticatedRequest 
   return req;
 };
 
-export const signToken = ({ email, _id }: UserData): string => {
+export const signToken = function ({ email, _id }: IUser): string {
   const payload = { email, _id };
   return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
 };
