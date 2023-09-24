@@ -1,5 +1,4 @@
-const Profile = require('./Profile');
-const Item = require("./Item");
+import User from './User';
+import Coffee from './Coffee';
 
-
-module.exports = { Profile, Item };
+export { User, Coffee };

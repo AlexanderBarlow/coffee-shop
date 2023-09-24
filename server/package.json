@@ -1,14 +1,14 @@
 {
-    "name": "rental-site",
+    "name": "coffee-shop",
     "version": "1.0.0",
     "engines": {
         "node": "16.19.0",
         "npm": "8.19.3"
     },
     "description": "",
-    "main": "server.js",
+    "main": "server.ts",
     "scripts": {
-        "start": "node server.js",
+        "start": "node server.ts",
         "watch": "nodemon server.js",
         "seed": "node seeders/seeds.js",
         "build": "tsc -p tsconfig.json"

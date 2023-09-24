@@ -1,21 +1,14 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "private": true,
+  "engines": {
+    "node": "16.19.0",
+    "npm": "8.19.3"
+},
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.53",
-    "@types/react": "^18.2.22",
-    "@types/react-dom": "^18.2.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "server": "^1.0.38"
   },
+  "main": "server/server.ts",
   "scripts": {
     "start": "node server/server --ignore client",
     "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
@@ -23,22 +16,7 @@
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build"
 },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+}
 }
