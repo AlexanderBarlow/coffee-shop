@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const dbName = "Coffee-shop"
 
 dotenv.config();
 
@@ -8,6 +9,7 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    dbName: dbName,
   }
 );
 

@@ -10,7 +10,7 @@
     "scripts": {
         "start": "node server.js",
         "watch": "nodemon server.js",
-        "seed": "node dist/seeds/seeds.js",
+        "seed": "node seeds/seeds.js",
         "compile": "tsc",
         "build": "npm run compile"
     },

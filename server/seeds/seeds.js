@@ -1,9 +1,9 @@
-import * as mongoose from 'mongoose'; // Assuming you are using Mongoose
-import dotenv from 'dotenv'
+ const mongoose = require('mongoose'); // Assuming you are using Mongoose
+const dotenv = require('dotenv')
 dotenv.config();
 
 // Import your Profile and Item models with their corresponding types
-import  { User, Coffee }  from '../models';
+const  { User, Coffee }  = require('../models');
 
 // Import your seed data with their corresponding types
 const profileSeeds = require('./profileSeeds.json');
