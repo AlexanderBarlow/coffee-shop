@@ -1,19 +1,15 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
 
-const connectDb = async () => {
-  try {
-    const uri = process.env.MONGODB_URI || 'mongodb://localhost/coffee-shop'; 
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/coffee-shop',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   }
-};
+);
 
-module.export =  connectDb;
+module.exports = mongoose.connection;
+
