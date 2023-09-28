@@ -1,17 +1,9 @@
-import { Schema, model, Document } from 'mongoose';
-import bcrypt from 'bcrypt';
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-export interface IUser extends Document {
-  email: string;
-  password: string;
-  cart: {
-    product: string; // Assuming 'product' is an ObjectId string
-    quantity: number;
-  }[];
-  isCorrectPassword: (password: string) => Promise<boolean>; // Declare the method
-}
+const { Schema } = mongoose;
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -25,9 +17,9 @@ const userSchema = new Schema<IUser>({
   cart: [
     {
       product: {
-        type: Schema.Types.ObjectId, // Assuming 'product' references 'Coffee'
-        ref: 'Coffee',
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Coffee', // Assuming 'Coffee' is the referenced model
+        required: false,
       },
       quantity: {
         type: Number,
@@ -50,6 +42,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = model<IUser>('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
-export default User;
+module.exports = User;

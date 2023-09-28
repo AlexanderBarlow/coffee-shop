@@ -8,16 +8,19 @@
     "description": "",
     "main": "server.ts",
     "scripts": {
-        "start": "node server.ts",
+        "start": "node server.js",
         "watch": "nodemon server.js",
-        "seed": "node seeders/seeds.js",
-        "build": "tsc -p tsconfig.json"
+        "seed": "node dist/seeds/seeds.js",
+        "compile": "tsc",
+        "build": "npm run compile"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@types/express": "^4.17.18",
         "apollo-server-express": "^3.6.2",
+        "apollo-server-types": "^3.8.0",
         "bcrypt": "^4.0.1",
         "dotenv": "^16.0.3",
         "express": "^4.17.1",
@@ -28,6 +31,7 @@
     },
     "devDependencies": {
         "@types/bcrypt": "^5.0.0",
+        "@types/jsonwebtoken": "^9.0.3",
         "nodemon": "^2.0.3"
     }
 }

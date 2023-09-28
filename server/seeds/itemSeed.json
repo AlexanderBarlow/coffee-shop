@@ -1,6 +1,8 @@
 {
-    "email": "ab@gmail.com",
-    "password": "1234"
+    "name": "iced coffee",
+    "description": "An iced black coffee.",
+    "price": "4.99",
+    "category": "iced"
 }
    
    

@@ -1,13 +1,15 @@
 import * as mongoose from 'mongoose'; // Assuming you are using Mongoose
+import dotenv from 'dotenv'
+dotenv.config();
 
 // Import your Profile and Item models with their corresponding types
-import { User, Coffee } from '../models';
+import  { User, Coffee }  from '../models';
 
 // Import your seed data with their corresponding types
-import profileSeeds from './profileSeeds.json';
-import itemSeeds from './itemSeed.json';
+const profileSeeds = require('./profileSeeds.json');
+const itemSeeds = require('./itemSeed.json');
 
-mongoose.connect('your-mongo-uri');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/coffee-shop');
 
 mongoose.connection.once('open', async () => {
   try {

@@ -2,8 +2,9 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 const { authMiddleware } = require("./utils/auth");
-
-const { typeDefs, resolvers } = require("./schemas");
+const dotenv = require("dotenv");
+const { resolvers } = require("./schemas/resolvers");
+const { typeDefs } = require("./schemas/typeDefs");
 const connectDb = require("./config/connection");
 
 const PORT = process.env.PORT || 3001;
@@ -40,7 +41,7 @@ app.get("*", function (req, res) {
 
 const startApolloServer = async () => {
   try {
-    await connectDb(); // Connect to the database using the connectDb function
+    await connectDb();
 
     await server.start();
     server.applyMiddleware({ app });

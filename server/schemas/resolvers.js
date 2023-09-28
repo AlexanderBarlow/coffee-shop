@@ -1,39 +1,39 @@
-import { AuthenticationError } from 'apollo-server-express';
-import { signToken } from '../utils/auth';
-import  User, { IUser } from '../models/User';
-import Coffee, { ICoffee } from '../models/Coffee';
+const { AuthenticationError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
+const User = require('../models/User');
+const Coffee = require('../models/Coffee');
 
 const resolvers = {
   Query: {
-    profiles: async (): Promise<IUser[]> => {
+    profiles: async () => {
       const allProfiles = await User.find();
       console.log(allProfiles);
       return allProfiles;
     },
 
-    profile: async (_: any, { profileId }: { profileId: string }): Promise<IUser | null> => {
+    profile: async (_, { profileId }) => {
       return await User.findOne({ _id: profileId });
     },
-    items: async (): Promise<ICoffee[]> => {
+    items: async () => {
       return await Coffee.find();
     },
-    item: async (_: any, { itemId }: { itemId: string }): Promise<ICoffee | null> => {
+    item: async (_, { itemId }) => {
       return await Coffee.findOne({ _id: itemId });
     },
   },
 
   Mutation: {
-    addProfile: async (_: any, { email, password }: { email: string; password: string }) => {
+    addProfile: async (_, { email, password }) => {
       const profile = await User.create({ email, password });
       const token = signToken(profile);
       return { token, profile };
     },
 
-    removeProfile: async (_: any, { profileId }: { profileId: string }) => {
+    removeProfile: async (_, { profileId }) => {
       return User.findOneAndDelete({ _id: profileId });
     },
 
-    login: async (_: any, { email, password }: { email: string; password: string }) => {
+    login: async (_, { email, password }) => {
       const profile = await User.findOne({ email });
 
       if (!profile) {
@@ -52,8 +52,8 @@ const resolvers = {
     },
 
     addItem: async (
-      _: any,
-      { itemName, description, itemPrice, city }: { itemName: string; description: string; itemPrice: number; city: string }
+      _,
+      { itemName, description, itemPrice, city }
     ) => {
       console.log({ itemName, description, itemPrice, city });
       const newItem = await Coffee.create({
@@ -67,4 +67,4 @@ const resolvers = {
   },
 };
 
-export default resolvers;
+module.exports = resolvers;
