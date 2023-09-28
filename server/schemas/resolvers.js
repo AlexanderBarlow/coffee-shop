@@ -1,68 +1,62 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
-const User = require('../models/User');
-const Coffee = require('../models/Coffee');
+const { User, Coffee } = require('../models');
 
 const resolvers = {
   Query: {
-    profiles: async () => {
-      const allProfiles = await User.find();
-      console.log(allProfiles);
-      return allProfiles;
+    getCoffee: async (_, { _id }) => {
+      return await Coffee.findById(_id);
     },
-
-    profile: async (_, { profileId }) => {
-      return await User.findOne({ _id: profileId });
-    },
-    items: async () => {
+    getAllCoffees: async () => {
       return await Coffee.find();
     },
-    item: async (_, { itemId }) => {
-      return await Coffee.findOne({ _id: itemId });
+    getUser: async (_, { _id }) => {
+      return await User.findById(_id);
     },
   },
-
   Mutation: {
-    addProfile: async (_, { email, password }) => {
-      const profile = await User.create({ email, password });
-      const token = signToken(profile);
-      return { token, profile };
+    addUser: async (_, { email, password }) => {
+      const newUser = new User({ email, password });
+      return await newUser.save();
     },
-
-    removeProfile: async (_, { profileId }) => {
-      return User.findOneAndDelete({ _id: profileId });
-    },
-
-    login: async (_, { email, password }) => {
-      const profile = await User.findOne({ email });
-
-      if (!profile) {
-        throw new AuthenticationError("No profile found with this email address");
+    addToCart: async (_, { userId, productId, quantity }) => {
+      const user = await User.findById(userId);
+      if (!user) {
+        throw new Error('User not found');
       }
 
-      const correctPw = await profile.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError("Incorrect credentials");
+      const product = await Coffee.findById(productId);
+      if (!product) {
+        throw new Error('Product not found');
       }
 
-      const token = signToken(profile);
+      // Add the product to the user's cart
+      user.cart.push({ product: productId, quantity });
+      await user.save();
 
-      return { token, profile };
+      return user;
     },
-
-    addItem: async (
-      _,
-      { itemName, description, itemPrice, city }
-    ) => {
-      console.log({ itemName, description, itemPrice, city });
-      const newItem = await Coffee.create({
-        itemName,
-        description,
-        itemPrice,
-        city,
-      });
-      return newItem;
+    removeFromCart: async (_, { userId, productId }) => {
+      const user = await User.findById(userId);
+      if (!user) {
+        throw new Error(`User with ID ${userId} not found`);
+      }
+    
+      const index = user.cart.findIndex((item) => item.product.toString() === productId);
+      if (index === -1) {
+        throw new Error(`Product with ID ${productId} not found in the user's cart`);
+      }
+    
+      // Remove the item by index
+      user.cart.splice(index, 1);
+    
+      await user.save();
+    
+      return user;
+    },
+    checkout: async (_, { userId }) => {
+      // Implement your checkout logic here
+      // You can calculate the total price and update the user's cart and order history
+      // Return a success message or order confirmation
+      return 'Order successfully placed!';
     },
   },
 };
